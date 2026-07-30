@@ -1,0 +1,743 @@
+mysql> CREATE TABLE Students (
+    ->     student_id INT PRIMARY KEY,
+    ->     first_name VARCHAR(50) NOT NULL,
+    ->     last_name VARCHAR(50) NOT NULL,
+    ->     email VARCHAR(100) UNIQUE NOT NULL,
+    ->     phone VARCHAR(15) UNIQUE,
+    ->     gender CHAR(1),
+    ->     date_of_birth DATE NOT NULL,
+    ->     admission_date DATE DEFAULT (CURRENT_DATE)
+    -> );
+--------------
+CREATE TABLE Students (
+    student_id INT PRIMARY KEY,
+    first_name VARCHAR(50) NOT NULL,
+    last_name VARCHAR(50) NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    phone VARCHAR(15) UNIQUE,
+    gender CHAR(1),
+    date_of_birth DATE NOT NULL,
+    admission_date DATE DEFAULT (CURRENT_DATE)
+)
+--------------
+
+ERROR 1050 (42S01): Table 'students' already exists
+mysql> USE college_db;
+Database changed
+mysql>
+mysql> CREATE TABLE Student_Info (
+    ->     student_id INT PRIMARY KEY,
+    ->     student_name VARCHAR(100) NOT NULL,
+    ->     email VARCHAR(100) UNIQUE NOT NULL,
+    ->     phone VARCHAR(15) UNIQUE,
+    ->     city VARCHAR(50) DEFAULT 'Mysuru'
+    -> );
+--------------
+CREATE TABLE Student_Info (
+    student_id INT PRIMARY KEY,
+    student_name VARCHAR(100) NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    phone VARCHAR(15) UNIQUE,
+    city VARCHAR(50) DEFAULT 'Mysuru'
+)
+--------------
+
+Query OK, 0 rows affected (0.05 sec)
+
+mysql>
+mysql> CREATE TABLE Course_Info (
+    ->     course_id INT PRIMARY KEY,
+    ->     course_name VARCHAR(100) NOT NULL UNIQUE,
+    ->     duration_months INT NOT NULL,
+    ->     fee DECIMAL(10,2) DEFAULT 5000.00
+    -> );
+--------------
+CREATE TABLE Course_Info (
+    course_id INT PRIMARY KEY,
+    course_name VARCHAR(100) NOT NULL UNIQUE,
+    duration_months INT NOT NULL,
+    fee DECIMAL(10,2) DEFAULT 5000.00
+)
+--------------
+
+Query OK, 0 rows affected (0.04 sec)
+
+mysql>
+mysql> CREATE TABLE Faculty_Info (
+    ->     faculty_id INT PRIMARY KEY,
+    ->     faculty_name VARCHAR(100) NOT NULL,
+    ->     email VARCHAR(100) UNIQUE NOT NULL,
+    ->     department VARCHAR(50) NOT NULL,
+    ->     salary DECIMAL(10,2) DEFAULT 35000.00
+    -> );
+--------------
+CREATE TABLE Faculty_Info (
+    faculty_id INT PRIMARY KEY,
+    faculty_name VARCHAR(100) NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    department VARCHAR(50) NOT NULL,
+    salary DECIMAL(10,2) DEFAULT 35000.00
+)
+--------------
+
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> SHOW TABLES;
+--------------
+SHOW TABLES
+--------------
+
++----------------------+
+| Tables_in_college_db |
++----------------------+
+| attendance           |
+| course_info          |
+| courses              |
+| departments          |
+| enrollments          |
+| faculty              |
+| faculty_info         |
+| marks                |
+| student_info         |
+| studentcontactview   |
+| students             |
+| topstudents          |
++----------------------+
+12 rows in set (0.02 sec)
+
+mysql> DESC Student_Info;
+--------------
+DESC Student_Info
+--------------
+
++--------------+--------------+------+-----+---------+-------+
+| Field        | Type         | Null | Key | Default | Extra |
++--------------+--------------+------+-----+---------+-------+
+| student_id   | int          | NO   | PRI | NULL    |       |
+| student_name | varchar(100) | NO   |     | NULL    |       |
+| email        | varchar(100) | NO   | UNI | NULL    |       |
+| phone        | varchar(15)  | YES  | UNI | NULL    |       |
+| city         | varchar(50)  | YES  |     | Mysuru  |       |
++--------------+--------------+------+-----+---------+-------+
+5 rows in set (0.01 sec)
+
+mysql> DESC Course_Info;
+--------------
+DESC Course_Info
+--------------
+
++-----------------+---------------+------+-----+---------+-------+
+| Field           | Type          | Null | Key | Default | Extra |
++-----------------+---------------+------+-----+---------+-------+
+| course_id       | int           | NO   | PRI | NULL    |       |
+| course_name     | varchar(100)  | NO   | UNI | NULL    |       |
+| duration_months | int           | NO   |     | NULL    |       |
+| fee             | decimal(10,2) | YES  |     | 5000.00 |       |
++-----------------+---------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> DESC Faculty_Info;
+--------------
+DESC Faculty_Info
+--------------
+
++--------------+---------------+------+-----+----------+-------+
+| Field        | Type          | Null | Key | Default  | Extra |
++--------------+---------------+------+-----+----------+-------+
+| faculty_id   | int           | NO   | PRI | NULL     |       |
+| faculty_name | varchar(100)  | NO   |     | NULL     |       |
+| email        | varchar(100)  | NO   | UNI | NULL     |       |
+| department   | varchar(50)   | NO   |     | NULL     |       |
+| salary       | decimal(10,2) | YES  |     | 35000.00 |       |
++--------------+---------------+------+-----+----------+-------+
+5 rows in set (0.00 sec)
+
+mysql> USE college_db;
+Database changed
+mysql> ALTER TABLE Student_Info
+    -> ADD COLUMN PhoneNumber VARCHAR(15);
+--------------
+ALTER TABLE Student_Info
+ADD COLUMN PhoneNumber VARCHAR(15)
+--------------
+
+Query OK, 0 rows affected (0.06 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> ALTER TABLE Student_Info
+    -> MODIFY COLUMN student_name VARCHAR(150) NOT NULL;
+--------------
+ALTER TABLE Student_Info
+MODIFY COLUMN student_name VARCHAR(150) NOT NULL
+--------------
+
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> ALTER TABLE Student_Info
+    -> RENAME COLUMN city TO StudentCity;
+--------------
+ALTER TABLE Student_Info
+RENAME COLUMN city TO StudentCity
+--------------
+
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> ALTER TABLE Student_Info
+    -> DROP COLUMN gender;
+--------------
+ALTER TABLE Student_Info
+DROP COLUMN gender
+--------------
+
+ERROR 1091 (42000): Can't DROP 'gender'; check that column/key exists
+mysql> DESC Student_Info;
+--------------
+DESC Student_Info
+--------------
+
++--------------+--------------+------+-----+---------+-------+
+| Field        | Type         | Null | Key | Default | Extra |
++--------------+--------------+------+-----+---------+-------+
+| student_id   | int          | NO   | PRI | NULL    |       |
+| student_name | varchar(150) | NO   |     | NULL    |       |
+| email        | varchar(100) | NO   | UNI | NULL    |       |
+| phone        | varchar(15)  | YES  | UNI | NULL    |       |
+| StudentCity  | varchar(50)  | YES  |     | Mysuru  |       |
+| PhoneNumber  | varchar(15)  | YES  |     | NULL    |       |
++--------------+--------------+------+-----+---------+-------+
+6 rows in set (0.00 sec)
+
+mysql> USE college_db;
+Database changed
+mysql> DROP TABLE Faculty_Info;
+--------------
+DROP TABLE Faculty_Info
+--------------
+
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> TRUNCATE TABLE Course_Info;
+--------------
+TRUNCATE TABLE Course_Info
+--------------
+
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> DELETE FROM Student_Info;
+--------------
+DELETE FROM Student_Info
+--------------
+
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> DELETE FROM Student_Info
+    -> WHERE student_id = 101;
+--------------
+DELETE FROM Student_Info
+WHERE student_id = 101
+--------------
+
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> SHOW TABLES;
+--------------
+SHOW TABLES
+--------------
+
++----------------------+
+| Tables_in_college_db |
++----------------------+
+| attendance           |
+| course_info          |
+| courses              |
+| departments          |
+| enrollments          |
+| faculty              |
+| marks                |
+| student_info         |
+| studentcontactview   |
+| students             |
+| topstudents          |
++----------------------+
+11 rows in set (0.00 sec)
+
+mysql>
+mysql> SELECT * FROM Student_Info;
+--------------
+SELECT * FROM Student_Info
+--------------
+
+Empty set (0.00 sec)
+
+mysql> SELECT * FROM Course_Info;
+--------------
+SELECT * FROM Course_Info
+--------------
+
+Empty set (0.00 sec)
+
+mysql> SHOW TABLES;
+--------------
+SHOW TABLES
+--------------
+
++----------------------+
+| Tables_in_college_db |
++----------------------+
+| attendance           |
+| course_info          |
+| courses              |
+| departments          |
+| enrollments          |
+| faculty              |
+| marks                |
+| student_info         |
+| studentcontactview   |
+| students             |
+| topstudents          |
++----------------------+
+11 rows in set (0.00 sec)
+
+mysql> CREATE TABLE Students_Details (
+    ->     StudentID INT PRIMARY KEY,
+    ->     Name VARCHAR(50) NOT NULL,
+    ->     Age INT,
+    ->     Department VARCHAR(20),
+    ->     Marks INT
+    -> );
+--------------
+CREATE TABLE Students_Details (
+    StudentID INT PRIMARY KEY,
+    Name VARCHAR(50) NOT NULL,
+    Age INT,
+    Department VARCHAR(20),
+    Marks INT
+)
+--------------
+
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> INSERT INTO Students_Details VALUES
+    -> (1,'Amit',20,'CSE',85),
+    -> (2,'Anjali',19,'ECE',78),
+    -> (3,'Rahul',21,'CSE',45),
+    -> (4,'Sneha',18,'EEE',92),
+    -> (5,'Arun',17,'CSE',65),
+    -> (6,'Kiran',20,'ECE',88),
+    -> (7,'Vikas',22,'MECH',55),
+    -> (8,'Akash',19,'CSE',72),
+    -> (9,'Deepak',21,'ECE',95),
+    -> (10,'Manoj',17,'CIVIL',40);
+--------------
+INSERT INTO Students_Details VALUES
+(1,'Amit',20,'CSE',85),
+(2,'Anjali',19,'ECE',78),
+(3,'Rahul',21,'CSE',45),
+(4,'Sneha',18,'EEE',92),
+(5,'Arun',17,'CSE',65),
+(6,'Kiran',20,'ECE',88),
+(7,'Vikas',22,'MECH',55),
+(8,'Akash',19,'CSE',72),
+(9,'Deepak',21,'ECE',95),
+(10,'Manoj',17,'CIVIL',40)
+--------------
+
+Query OK, 10 rows affected (0.00 sec)
+Records: 10  Duplicates: 0  Warnings: 0
+
+mysql> desc Student_Details;
+--------------
+desc Student_Details
+--------------
+
+ERROR 1146 (42S02): Table 'college_db.student_details' doesn't exist
+mysql> SELECT * FROM Students_Details;
+--------------
+SELECT * FROM Students_Details
+--------------
+
++-----------+--------+------+------------+-------+
+| StudentID | Name   | Age  | Department | Marks |
++-----------+--------+------+------------+-------+
+|         1 | Amit   |   20 | CSE        |    85 |
+|         2 | Anjali |   19 | ECE        |    78 |
+|         3 | Rahul  |   21 | CSE        |    45 |
+|         4 | Sneha  |   18 | EEE        |    92 |
+|         5 | Arun   |   17 | CSE        |    65 |
+|         6 | Kiran  |   20 | ECE        |    88 |
+|         7 | Vikas  |   22 | MECH       |    55 |
+|         8 | Akash  |   19 | CSE        |    72 |
+|         9 | Deepak |   21 | ECE        |    95 |
+|        10 | Manoj  |   17 | CIVIL      |    40 |
++-----------+--------+------+------------+-------+
+10 rows in set (0.00 sec)
+
+mysql> UPDATE Students_Details
+    -> SET Department='CSE'
+    -> WHERE StudentID=7;
+--------------
+UPDATE Students_Details
+SET Department='CSE'
+WHERE StudentID=7
+--------------
+
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> UPDATE Students_Details
+    -> SET Marks = Marks + 5
+    -> WHERE Marks < 50;
+--------------
+UPDATE Students_Details
+SET Marks = Marks + 5
+WHERE Marks < 50
+--------------
+
+Query OK, 2 rows affected (0.00 sec)
+Rows matched: 2  Changed: 2  Warnings: 0
+
+mysql> DELETE FROM Students_Details
+    -> WHERE Age < 18;
+--------------
+DELETE FROM Students_Details
+WHERE Age < 18
+--------------
+
+Query OK, 2 rows affected (0.01 sec)
+
+mysql> CREATE USER 'student_user'@'localhost'
+    -> IDENTIFIED BY 'password123';
+--------------
+CREATE USER 'student_user'@'localhost'
+IDENTIFIED BY 'password123'
+--------------
+
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> GRANT SELECT, INSERT
+    -> ON college_db.*
+    -> TO 'student_user'@'localhost';
+--------------
+GRANT SELECT, INSERT
+ON college_db.*
+TO 'student_user'@'localhost'
+--------------
+
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> REVOKE INSERT
+    -> ON college_db.*
+    -> FROM 'student_user'@'localhost';
+--------------
+REVOKE INSERT
+ON college_db.*
+FROM 'student_user'@'localhost'
+--------------
+
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> SHOW GRANTS FOR 'student_user'@'localhost';
+--------------
+SHOW GRANTS FOR 'student_user'@'localhost'
+--------------
+
++--------------------------------------------------------------+
+| Grants for student_user@localhost                            |
++--------------------------------------------------------------+
+| GRANT USAGE ON *.* TO `student_user`@`localhost`             |
+| GRANT SELECT ON `college_db`.* TO `student_user`@`localhost` |
++--------------------------------------------------------------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT * FROM Students_Details;
+--------------
+SELECT * FROM Students_Details
+--------------
+
++-----------+--------+------+------------+-------+
+| StudentID | Name   | Age  | Department | Marks |
++-----------+--------+------+------------+-------+
+|         1 | Amit   |   20 | CSE        |    85 |
+|         2 | Anjali |   19 | ECE        |    78 |
+|         3 | Rahul  |   21 | CSE        |    50 |
+|         4 | Sneha  |   18 | EEE        |    92 |
+|         6 | Kiran  |   20 | ECE        |    88 |
+|         7 | Vikas  |   22 | CSE        |    55 |
+|         8 | Akash  |   19 | CSE        |    72 |
+|         9 | Deepak |   21 | ECE        |    95 |
++-----------+--------+------+------------+-------+
+8 rows in set (0.00 sec)
+
+mysql> SELECT * FROM Students_Details
+    -> WHERE Department='CSE';
+--------------
+SELECT * FROM Students_Details
+WHERE Department='CSE'
+--------------
+
++-----------+-------+------+------------+-------+
+| StudentID | Name  | Age  | Department | Marks |
++-----------+-------+------+------------+-------+
+|         1 | Amit  |   20 | CSE        |    85 |
+|         3 | Rahul |   21 | CSE        |    50 |
+|         7 | Vikas |   22 | CSE        |    55 |
+|         8 | Akash |   19 | CSE        |    72 |
++-----------+-------+------+------------+-------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT * FROM Students_Details
+    -> WHERE Marks>80;
+--------------
+SELECT * FROM Students_Details
+WHERE Marks>80
+--------------
+
++-----------+--------+------+------------+-------+
+| StudentID | Name   | Age  | Department | Marks |
++-----------+--------+------+------------+-------+
+|         1 | Amit   |   20 | CSE        |    85 |
+|         4 | Sneha  |   18 | EEE        |    92 |
+|         6 | Kiran  |   20 | ECE        |    88 |
+|         9 | Deepak |   21 | ECE        |    95 |
++-----------+--------+------+------------+-------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT * FROM Students_Details
+    -> WHERE Age=20;
+--------------
+SELECT * FROM Students_Details
+WHERE Age=20
+--------------
+
++-----------+-------+------+------------+-------+
+| StudentID | Name  | Age  | Department | Marks |
++-----------+-------+------+------------+-------+
+|         1 | Amit  |   20 | CSE        |    85 |
+|         6 | Kiran |   20 | ECE        |    88 |
++-----------+-------+------+------------+-------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT COUNT(*) FROM Students_Details;
+--------------
+SELECT COUNT(*) FROM Students_Details
+--------------
+
++----------+
+| COUNT(*) |
++----------+
+|        8 |
++----------+
+1 row in set (0.00 sec)
+
+mysql> SELECT * FROM Students_Details
+    -> WHERE Department='CSE'
+    -> AND Marks>75;
+--------------
+SELECT * FROM Students_Details
+WHERE Department='CSE'
+AND Marks>75
+--------------
+
++-----------+------+------+------------+-------+
+| StudentID | Name | Age  | Department | Marks |
++-----------+------+------+------------+-------+
+|         1 | Amit |   20 | CSE        |    85 |
++-----------+------+------+------------+-------+
+1 row in set (0.00 sec)
+
+mysql> SELECT * FROM Students_Details
+    -> WHERE Department='CSE'
+    -> OR Department='ECE';
+--------------
+SELECT * FROM Students_Details
+WHERE Department='CSE'
+OR Department='ECE'
+--------------
+
++-----------+--------+------+------------+-------+
+| StudentID | Name   | Age  | Department | Marks |
++-----------+--------+------+------------+-------+
+|         1 | Amit   |   20 | CSE        |    85 |
+|         2 | Anjali |   19 | ECE        |    78 |
+|         3 | Rahul  |   21 | CSE        |    50 |
+|         6 | Kiran  |   20 | ECE        |    88 |
+|         7 | Vikas  |   22 | CSE        |    55 |
+|         8 | Akash  |   19 | CSE        |    72 |
+|         9 | Deepak |   21 | ECE        |    95 |
++-----------+--------+------+------------+-------+
+7 rows in set (0.00 sec)
+
+mysql> SELECT * FROM Students_Details
+    -> WHERE Name LIKE 'A%';
+--------------
+SELECT * FROM Students_Details
+WHERE Name LIKE 'A%'
+--------------
+
++-----------+--------+------+------------+-------+
+| StudentID | Name   | Age  | Department | Marks |
++-----------+--------+------+------------+-------+
+|         1 | Amit   |   20 | CSE        |    85 |
+|         2 | Anjali |   19 | ECE        |    78 |
+|         8 | Akash  |   19 | CSE        |    72 |
++-----------+--------+------+------------+-------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT * FROM Students_Details
+    -> WHERE Name LIKE '%k';
+--------------
+SELECT * FROM Students_Details
+WHERE Name LIKE '%k'
+--------------
+
++-----------+--------+------+------------+-------+
+| StudentID | Name   | Age  | Department | Marks |
++-----------+--------+------+------------+-------+
+|         9 | Deepak |   21 | ECE        |    95 |
++-----------+--------+------+------------+-------+
+1 row in set (0.00 sec)
+
+mysql> SELECT * FROM Students_Details
+    -> WHERE Marks BETWEEN 60 AND 90;
+--------------
+SELECT * FROM Students_Details
+WHERE Marks BETWEEN 60 AND 90
+--------------
+
++-----------+--------+------+------------+-------+
+| StudentID | Name   | Age  | Department | Marks |
++-----------+--------+------+------------+-------+
+|         1 | Amit   |   20 | CSE        |    85 |
+|         2 | Anjali |   19 | ECE        |    78 |
+|         6 | Kiran  |   20 | ECE        |    88 |
+|         8 | Akash  |   19 | CSE        |    72 |
++-----------+--------+------+------------+-------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT * FROM Students_Details
+    -> ORDER BY Marks ASC;
+--------------
+SELECT * FROM Students_Details
+ORDER BY Marks ASC
+--------------
+
++-----------+--------+------+------------+-------+
+| StudentID | Name   | Age  | Department | Marks |
++-----------+--------+------+------------+-------+
+|         3 | Rahul  |   21 | CSE        |    50 |
+|         7 | Vikas  |   22 | CSE        |    55 |
+|         8 | Akash  |   19 | CSE        |    72 |
+|         2 | Anjali |   19 | ECE        |    78 |
+|         1 | Amit   |   20 | CSE        |    85 |
+|         6 | Kiran  |   20 | ECE        |    88 |
+|         4 | Sneha  |   18 | EEE        |    92 |
+|         9 | Deepak |   21 | ECE        |    95 |
++-----------+--------+------+------------+-------+
+8 rows in set (0.00 sec)
+
+mysql> SELECT * FROM Students_Details
+    -> ORDER BY Marks DESC;
+--------------
+SELECT * FROM Students_Details
+ORDER BY Marks DESC
+--------------
+
++-----------+--------+------+------------+-------+
+| StudentID | Name   | Age  | Department | Marks |
++-----------+--------+------+------------+-------+
+|         9 | Deepak |   21 | ECE        |    95 |
+|         4 | Sneha  |   18 | EEE        |    92 |
+|         6 | Kiran  |   20 | ECE        |    88 |
+|         1 | Amit   |   20 | CSE        |    85 |
+|         2 | Anjali |   19 | ECE        |    78 |
+|         8 | Akash  |   19 | CSE        |    72 |
+|         7 | Vikas  |   22 | CSE        |    55 |
+|         3 | Rahul  |   21 | CSE        |    50 |
++-----------+--------+------+------------+-------+
+8 rows in set (0.00 sec)
+
+mysql> SELECT * FROM Students_Details
+    -> ORDER BY Name ASC;
+--------------
+SELECT * FROM Students_Details
+ORDER BY Name ASC
+--------------
+
++-----------+--------+------+------------+-------+
+| StudentID | Name   | Age  | Department | Marks |
++-----------+--------+------+------------+-------+
+|         8 | Akash  |   19 | CSE        |    72 |
+|         1 | Amit   |   20 | CSE        |    85 |
+|         2 | Anjali |   19 | ECE        |    78 |
+|         9 | Deepak |   21 | ECE        |    95 |
+|         6 | Kiran  |   20 | ECE        |    88 |
+|         3 | Rahul  |   21 | CSE        |    50 |
+|         4 | Sneha  |   18 | EEE        |    92 |
+|         7 | Vikas  |   22 | CSE        |    55 |
++-----------+--------+------+------------+-------+
+8 rows in set (0.00 sec)
+
+mysql> SELECT * FROM Students_Details
+    -> ORDER BY Department ASC, Marks DESC;
+--------------
+SELECT * FROM Students_Details
+ORDER BY Department ASC, Marks DESC
+--------------
+
++-----------+--------+------+------------+-------+
+| StudentID | Name   | Age  | Department | Marks |
++-----------+--------+------+------------+-------+
+|         1 | Amit   |   20 | CSE        |    85 |
+|         8 | Akash  |   19 | CSE        |    72 |
+|         7 | Vikas  |   22 | CSE        |    55 |
+|         3 | Rahul  |   21 | CSE        |    50 |
+|         9 | Deepak |   21 | ECE        |    95 |
+|         6 | Kiran  |   20 | ECE        |    88 |
+|         2 | Anjali |   19 | ECE        |    78 |
+|         4 | Sneha  |   18 | EEE        |    92 |
++-----------+--------+------+------------+-------+
+8 rows in set (0.00 sec)
+
+mysql> SELECT COUNT(*) AS Total_Students
+    -> FROM Students_Details;
+--------------
+SELECT COUNT(*) AS Total_Students
+FROM Students_Details
+--------------
+
++----------------+
+| Total_Students |
++----------------+
+|              8 |
++----------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT MAX(Marks) AS Highest_Marks
+    -> FROM Students_Details;
+--------------
+SELECT MAX(Marks) AS Highest_Marks
+FROM Students_Details
+--------------
+
++---------------+
+| Highest_Marks |
++---------------+
+|            95 |
++---------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT MIN(Marks) AS Lowest_Marks
+    -> FROM Students_Details;
+--------------
+SELECT MIN(Marks) AS Lowest_Marks
+FROM Students_Details
+--------------
+
++--------------+
+| Lowest_Marks |
++--------------+
+|           50 |
++--------------+
+1 row in set (0.00 sec)

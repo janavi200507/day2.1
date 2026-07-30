@@ -1,0 +1,66 @@
+
+mysql> USE college_db;
+Database changed
+mysql> DROP TABLE Faculty_Info;
+--------------
+DROP TABLE Faculty_Info
+--------------
+
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> TRUNCATE TABLE Course_Info;
+--------------
+TRUNCATE TABLE Course_Info
+--------------
+
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> DELETE FROM Student_Info;
+--------------
+DELETE FROM Student_Info
+--------------
+
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> DELETE FROM Student_Info
+    -> WHERE student_id = 101;
+--------------
+DELETE FROM Student_Info
+WHERE student_id = 101
+--------------
+
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> SHOW TABLES;
+--------------
+SHOW TABLES
+--------------
+
++----------------------+
+| Tables_in_college_db |
++----------------------+
+| attendance           |
+| course_info          |
+| courses              |
+| departments          |
+| enrollments          |
+| faculty              |
+| marks                |
+| student_info         |
+| studentcontactview   |
+| students             |
+| topstudents          |
++----------------------+
+11 rows in set (0.00 sec)
+
+mysql>
+mysql> SELECT * FROM Student_Info;
+--------------
+SELECT * FROM Student_Info
+--------------
+
+Empty set (0.00 sec)
+
+mysql> SELECT * FROM Course_Info;
+--------------
+SELECT * FROM Course_Info
